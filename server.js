@@ -44,8 +44,15 @@ function Location( data ) {
   this.longitude = data.results[0].geometry.location.lng;
 }
 
+
 // /weather route
-// Weather()
+// server.get('/location', (request, response) => {
+//   const locationData = require('./data/geo.json');
+//   const location = new Location(locationData);
+//   response.status(200).json(location);
+// });
+
+// Weather( )
 
 // Force an Error to Happen (http://localhost:3000/boo)
 server.get('/boo', (request,response) => {
