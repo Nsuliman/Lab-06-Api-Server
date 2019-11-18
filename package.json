@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Nsuliman/Lab-06-Api-Server/issues"
   },
-  "homepage": "https://github.com/Nsuliman/Lab-06-Api-Server#readme"
+  "homepage": "https://github.com/Nsuliman/Lab-06-Api-Server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
 }
