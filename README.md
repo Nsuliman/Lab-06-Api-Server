@@ -1,12 +1,12 @@
 # Lab-06-Api-Server
 
 
-## Number and name of feature: ________________________________
+## Number and name of feature: 2.Weather 
 
-## Estimate of time needed to complete: _____
+## Estimate of time needed to complete: 2 Hours 
 
-## Start time: _____
+## Start time: 12:35
 
-## Finish time: _____
+## Finish time: 9:17 PM 
 
-## Actual time needed to complete: _____
+## Actual time needed to complete: 2 Hours 
