@@ -45,7 +45,57 @@ function Location( data ) {
 }
 
 // /weather route
+server.get('/weather', (request, response) => {
+  const weatherData = require('./data/darksky.json');
+  const weather = new Weather(weatherData);
+  // console.log(weatherData.timezone);
+  response.status(200).json(weather);
+});
+
+
 // Weather()
+let weatherArray = [];
+function Weather( data ) {
+
+  this.forcast = data.daily.data[0].summary;
+  this.time = new Date(data.daily.data[0].time*1022.1).toDateString();
+  
+  // this.locWeather();
+  // new Date(darkSkyData.daily.data[0].time*1000).toDateString();
+
+  for (let i=0;i<=data.daily.data.length;i++)
+  {
+    // console.log('  Hellllllllllllllllllllo \n\n\n\n\n\n\n\n' ,data.daily.data[0].summary);
+    
+      this.forcast = data.daily.data[i].summary;
+      console.log('  Forcattttttttttttttttttttttttttttttttttttttttt' ,this.forcast);
+
+      this.time = data.daily.data[i].time;
+      console.log('  timmmmmmmmmmmmmmmmmmmmmmmmmmmmmmme ' ,this.time);
+
+      weatherArray.push( this.forcast,this.time);
+      console.log('  arraaaaaaaaaaaaaaaaaaaaaaaay ' ,weatherArray);
+  }
+return weatherArray.json();
+}
+
+// Weather.prototype.locWeather => (array)
+// {
+//   for (let i=0;i<=data.daily.data.length;i++)
+//   {
+//     // console.log('  Hellllllllllllllllllllo \n\n\n\n\n\n\n\n' ,data.daily.data[0].summary);
+    
+//       this.forcast = data.daily.data[i].summary;
+//       console.log('  Forcattttttttttttttttttttttttttttttttttttttttt' ,this.forcast);
+
+//       this.time = data.daily.data[i].time;
+//       console.log('  timmmmmmmmmmmmmmmmmmmmmmmmmmmmmmme ' ,this.time);
+
+//       weatherArray.push( this.forcast,this.time);
+//       console.log('  arraaaaaaaaaaaaaaaaaaaaaaaay ' ,weatherArray);
+//   }
+// return weatherArray.json();
+// };
 
 // Force an Error to Happen (http://localhost:3000/boo)
 server.get('/boo', (request,response) => {
