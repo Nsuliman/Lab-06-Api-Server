@@ -47,9 +47,9 @@ function Location( data ) {
 // /weather route
 server.get('/weather', (request, response) => {
   const weatherData = require('./data/darksky.json');
-  const weather = new Weather(weatherData);
+  // const weather = new Weather(weatherData);
   // console.log(weatherData.timezone);
-  response.status(200).json(weather);
+  response.status(200).json(locWeather(weatherData.daily.data));
 });
 
 
@@ -57,45 +57,41 @@ server.get('/weather', (request, response) => {
 let weatherArray = [];
 function Weather( data ) {
 
-  this.forcast = data.daily.data[0].summary;
-  this.time = new Date(data.daily.data[0].time*1022.1).toDateString();
-  
-  // this.locWeather();
-  // new Date(darkSkyData.daily.data[0].time*1000).toDateString();
+  console.log('data : ', data);
 
-  for (let i=0;i<=data.daily.data.length;i++)
-  {
-    // console.log('  Hellllllllllllllllllllo \n\n\n\n\n\n\n\n' ,data.daily.data[0].summary);
-    
-      this.forcast = data.daily.data[i].summary;
-      console.log('  Forcattttttttttttttttttttttttttttttttttttttttt' ,this.forcast);
-
-      this.time = data.daily.data[i].time;
-      console.log('  timmmmmmmmmmmmmmmmmmmmmmmmmmmmmmme ' ,this.time);
-
-      weatherArray.push( this.forcast,this.time);
-      console.log('  arraaaaaaaaaaaaaaaaaaaaaaaay ' ,weatherArray);
-  }
-return weatherArray.json();
+  this.forcast = data.summary;
+  this.time = new Date(data.time*1022.1).toDateString();
 }
 
-// Weather.prototype.locWeather => (array)
-// {
-//   for (let i=0;i<=data.daily.data.length;i++)
-//   {
-//     // console.log('  Hellllllllllllllllllllo \n\n\n\n\n\n\n\n' ,data.daily.data[0].summary);
+function locWeather(array)
+{
+
+  /*  First Way */
+  // for (let i=0;i<array.length;i++)
+  // {
+  //   console.log('arr[i] : ', array[i]);
+  //   // console.log('  Hellllllllllllllllllllo \n\n\n\n\n\n\n\n' ,data.daily.data[0].summary);
     
-//       this.forcast = data.daily.data[i].summary;
-//       console.log('  Forcattttttttttttttttttttttttttttttttttttttttt' ,this.forcast);
+  //     // this.forcast = this.data.daily.data[i].summary;
+  //     // console.log('  Forcattttttttttttttttttttttttttttttttttttttttt' ,array[i].summary);
 
-//       this.time = data.daily.data[i].time;
-//       console.log('  timmmmmmmmmmmmmmmmmmmmmmmmmmmmmmme ' ,this.time);
+  //     // this.time = this.data.daily.data[i].time;
+  //     // console.log('  timmmmmmmmmmmmmmmmmmmmmmmmmmmmmmme ' ,array[i].time);
 
-//       weatherArray.push( this.forcast,this.time);
-//       console.log('  arraaaaaaaaaaaaaaaaaaaaaaaay ' ,weatherArray);
-//   }
-// return weatherArray.json();
-// };
+  //     weatherArray.push(new Weather(array[i]));
+  //     // console.log('  arraaaaaaaaaaaaaaaaaaaaaaaay ' ,weatherArray);
+  // }
+
+    /*  second Way */
+
+    array.forEach(element => {
+    // this.forcast = element.summary;
+    // this.time = element.time;
+    weatherArray.push(new Weather(element))
+  });
+
+return weatherArray;
+};
 
 // Force an Error to Happen (http://localhost:3000/boo)
 server.get('/boo', (request,response) => {
@@ -103,13 +99,14 @@ server.get('/boo', (request,response) => {
 });
 
 // When an error happens ...
-server.use('*', (request, response) =>{
-  response.status(404).send('Not Found');
-});
 
-server.use( (error, request, response) => {
-  response.status(500).send(error);
+let errorobject = {status : 500 ,  responseText : 'Sorry, something went wrong'};
+server.use('*', (request, response) =>{
+  response.status(404).send(Object.entries(errorobject));
 });
+// server.use( '/error', (request, response) => {
+//   response.status(500).send('saihkksfksns');
+// });
 
 
 server.listen( PORT, () => console.log(`App listening on ${PORT}`));
