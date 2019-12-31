@@ -63,6 +63,7 @@ function Weather( data ) {
   this.time = new Date(data.time*1022.1).toDateString();
 }
 
+
 function locWeather(array)
 {
 
